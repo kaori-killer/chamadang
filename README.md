@@ -11,7 +11,7 @@ npx expo prebuild
 npx expo run:ios
 ```
 
-Expo Go는 쓸 수 없어요(네이버맵·카메라 네이티브 모듈). development build로만 돌아가요.
+Expo Go는 쓸 수 없어요(네이버맵과 카메라 네이티브 모듈). development build로만 돌아가요.
 
 ## 폰트
 

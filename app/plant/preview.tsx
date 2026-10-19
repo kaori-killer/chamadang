@@ -21,7 +21,7 @@ export default function PlantPreview() {
       <VideoView player={player} style={{ flex: 1 }} contentFit="cover" nativeControls={false} />
       <View className="absolute inset-x-0 flex-row items-center justify-between px-edge" style={{ top: insets.top + 8 }}>
         <IconButton ariaLabel="닫기" tone="dark" onPress={() => { usePlantFlow.getState().reset(); router.dismissAll(); }}><X size={20} color={colors.bg} /></IconButton>
-        <View className="rounded-full bg-ink/40 px-3 py-2"><Text className="font-body text-[13px] font-bold text-bg">1.5초 · 반복 재생</Text></View>
+        <View className="rounded-full bg-ink/40 px-3 py-2"><Text className="font-body text-[13px] font-bold text-bg">1.5초, 반복 재생</Text></View>
       </View>
       <View className="absolute inset-x-0 items-center gap-4 px-page" style={{ bottom: insets.bottom + 50 }}>
         <Text className="font-title text-[26px] text-bg">이 순간, 괜찮아요?</Text>
