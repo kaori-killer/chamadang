@@ -16,6 +16,6 @@ describe("Button", () => {
     const btn = screen.getByRole("button", { name: "지우기" });
     fireEvent.press(btn);
     expect(onPress).not.toHaveBeenCalled();
-    expect(btn.props["aria-disabled"]).toBe(true);
+    expect(btn).toBeDisabled();
   });
 });
