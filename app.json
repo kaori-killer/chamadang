@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "차마당",
+    "slug": "chamadang",
+    "version": "0.1.0",
+    "scheme": "chamadang",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.sojeong.chamadang",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSCameraUsageDescription": "자리의 1.5초를 담기 위해 카메라를 써요.",
+        "NSMicrophoneUsageDescription": "자리의 소리를 함께 담기 위해 마이크를 써요.",
+        "NSLocationWhenInUseUsageDescription": "지금 있는 자리에 핀을 찍기 위해 위치를 써요. 앱을 쓸 때만요."
+      }
+    },
+    "android": {
+      "package": "com.sojeong.chamadang",
+      "permissions": ["CAMERA", "RECORD_AUDIO", "ACCESS_FINE_LOCATION"],
+      "edgeToEdgeEnabled": true
+    },
+    "web": { "bundler": "metro", "output": "single" },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      ["expo-camera", { "cameraPermission": "자리의 1.5초를 담기 위해 카메라를 써요.", "microphonePermission": "자리의 소리를 함께 담기 위해 마이크를 써요.", "recordAudioAndroid": true }],
+      ["expo-location", { "locationWhenInUsePermission": "지금 있는 자리에 핀을 찍기 위해 위치를 써요." }],
+      ["@mj-studio/react-native-naver-map", { "client_id": "NAVER_MAP_CLIENT_ID" }],
+      "expo-apple-authentication",
+      "expo-video"
+    ],
+    "experiments": { "typedRoutes": true }
+  }
+}
