@@ -27,8 +27,8 @@ Expo Go는 쓸 수 없어요(네이버맵과 카메라 네이티브 모듈). dev
 
 ```
 app/            화면(라우트)만. 상태 로직 없음
-components/     props로만 동작. Supabase·expo 모듈 import 금지
-hooks/          lib를 호출해 데이터·행동을 넘김
+components/     props로만 동작. Supabase와 expo 모듈 import 금지
+hooks/          lib를 호출해 데이터와 행동을 넘김
 lib/native      expo-* 모듈은 여기서만
 lib/geo         주소 API는 여기서만
 components/map  지도 라이브러리는 여기서만
