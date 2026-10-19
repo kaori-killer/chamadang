@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
-import { CameraView } from "expo-camera";
+import { CameraPreview, type CameraHandle } from "@/components/camera/CameraPreview";
 import { recordClip, stopRecording, type RecordedClip } from "@/lib/native/camera";
 import { tap, warning } from "@/lib/native/haptics";
 import { RecordButton } from "./RecordButton";
@@ -8,7 +8,7 @@ import { RecordButton } from "./RecordButton";
 type Props = { onRecorded: (clip: RecordedClip) => void };
 
 export function Recorder({ onRecorded }: Props) {
-  const camera = useRef<CameraView>(null);
+  const camera = useRef<CameraHandle>(null);
   const [recording, setRecording] = useState(false);
   const [cancelled, setCancelled] = useState(false);
   const releasedEarly = useRef(false);
@@ -39,7 +39,7 @@ export function Recorder({ onRecorded }: Props) {
 
   return (
     <View className="flex-1">
-      <CameraView ref={camera} style={{ flex: 1 }} facing="back" mode="video" videoQuality="720p" mute={false} />
+      <CameraPreview ref={camera} />
       <View className="absolute inset-x-0 bottom-0 items-center gap-4 pb-12">
         <Text role="status" aria-live="polite" className="font-title text-[26px] text-bg">
           {recording ? "담는 중…" : cancelled ? "손을 떼면 다시 찍어요" : "꾹 누르면 1.5초 담겨요"}
