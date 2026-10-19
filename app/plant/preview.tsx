@@ -26,7 +26,7 @@ export default function PlantPreview() {
       <View className="absolute inset-x-0 items-center gap-4 px-page" style={{ bottom: insets.bottom + 50 }}>
         <Text className="font-title text-[26px] text-bg">이 순간, 괜찮아요?</Text>
         <View className="w-full flex-row gap-2.5">
-          <Button label="다시 찍기" variant="secondary" className="flex-1 bg-bg/15 border-bg/60" icon={<RotateCcw size={18} color={colors.bg} />} onPress={() => router.back()} />
+          <Button label="다시 찍기" variant="secondary" className="flex-1 bg-bg/15 border-bg/60" labelClassName="text-bg" icon={<RotateCcw size={18} color={colors.bg} />} onPress={() => router.back()} />
           <Button label="이걸로 할게요" variant="secondary" className="flex-1" onPress={() => router.push("/plant/locate")} />
         </View>
         <Text className="font-body text-[13px] text-bg/75">탭하면 소리가 나요</Text>

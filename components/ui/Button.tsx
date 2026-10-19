@@ -9,6 +9,7 @@ type Props = Omit<PressableProps, "children" | "aria-label"> & {
   variant?: Variant;
   context?: Context;
   icon?: React.ReactNode;
+  labelClassName?: string;
 };
 
 const bg: Record<Variant, string> = {
@@ -24,7 +25,7 @@ const fg: Record<Variant, string> = {
   tertiary: "text-ink",
 };
 
-export function Button({ label, ariaLabel, variant = "primary", context = "page", icon, disabled, className, ...rest }: Props) {
+export function Button({ label, ariaLabel, variant = "primary", context = "page", icon, disabled, className, labelClassName, ...rest }: Props) {
   const height = variant === "tertiary" ? "min-h-[44px]" : context === "page" ? "min-h-[54px]" : "min-h-[50px]";
   const rounded = context === "page" ? "rounded-btn" : "rounded-btn-card";
   return (
@@ -37,7 +38,7 @@ export function Button({ label, ariaLabel, variant = "primary", context = "page"
       {...rest}
     >
       {icon}
-      <Text className={`font-body font-bold ${variant === "tertiary" ? "text-[14px]" : "text-[15px]"} ${disabled ? "text-bg" : fg[variant]}`}>{label}</Text>
+      <Text className={`font-body font-bold ${variant === "tertiary" ? "text-[14px]" : "text-[15px]"} ${disabled ? "text-bg" : fg[variant]} ${labelClassName ?? ""}`}>{label}</Text>
     </Pressable>
   );
 }
