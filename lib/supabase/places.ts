@@ -9,13 +9,13 @@ export async function fetchPlacesInBounds(bounds: Bounds, mode: PlaceMode): Prom
     sw_lat: bounds.sw.lat, sw_lng: bounds.sw.lng, ne_lat: bounds.ne.lat, ne_lng: bounds.ne.lng, mode,
   });
   if (error) throw error;
-  return data as PlaceRow[];
+  return data;
 }
 
 export async function fetchNearbyOwnPlace(lat: number, lng: number, meters: number) {
   const { data, error } = await supabase.rpc("nearby_own_place", { lat, lng, meters });
   if (error) throw error;
-  return (data as { id: string; name: string | null }[])[0] ?? null;
+  return data[0] ?? null;
 }
 
 export type NewPlace = {
@@ -35,7 +35,7 @@ export async function insertPlace(userId: string, p: NewPlace) {
     .select("id")
     .single();
   if (error) throw error;
-  return data.id as string;
+  return data.id;
 }
 
 export async function deletePlace(id: string) {

@@ -33,7 +33,7 @@ export const MapView = forwardRef<MapHandle, MapViewProps>(function MapView(
       onCameraIdle={(e) => {
         center.current = { lat: e.latitude, lng: e.longitude };
         onRegionChangeIdle?.(
-          { center: center.current, zoom: e.zoom },
+          { center: center.current, zoom: e.zoom ?? initialRegion.zoom },
           { sw: { lat: e.region.latitude, lng: e.region.longitude }, ne: { lat: e.region.latitude + e.region.latitudeDelta, lng: e.region.longitude + e.region.longitudeDelta } },
         );
       }}

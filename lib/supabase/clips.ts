@@ -5,7 +5,7 @@ export async function fetchClips(placeId: string): Promise<ClipRow[]> {
   const { data, error } = await supabase
     .from("clips").select("*").eq("place_id", placeId).order("recorded_at", { ascending: false });
   if (error) throw error;
-  return data as ClipRow[];
+  return data;
 }
 
 export type NewClip = {
