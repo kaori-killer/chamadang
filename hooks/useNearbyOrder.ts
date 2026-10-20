@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { PlaceRow } from "@/lib/supabase/types";
+import type { PlaceRow } from "@/lib/types";
 import type { MapMode } from "@/store/ui";
 import { distanceMeters } from "@/lib/geo/distance";
 

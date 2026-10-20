@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type { RecordedClip } from "@/lib/native/camera";
 import type { LatLng } from "@/lib/native/location";
 import type { Address } from "@/lib/geo/reverseGeocode";
-import type { Visibility } from "@/lib/supabase/types";
+import type { Visibility } from "@/lib/types";
 
 type Note = { tags: string[]; tea: string; note: string; visibility: Visibility };
 

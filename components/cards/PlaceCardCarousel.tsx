@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { FlatList, View, type ListRenderItem, type NativeScrollEvent, type NativeSyntheticEvent } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
-import type { PlaceRow } from "@/lib/supabase/types";
+import type { PlaceRow } from "@/lib/types";
 
 const CARD_W = 330;
 const GAP = 10;
@@ -39,11 +39,28 @@ export function PlaceCardCarousel({ places, selectedId, renderCard, onSelect, on
       else if (e.translationY < -60) runOnJS(onSwipeUp)();
     });
 
+  const move = useCallback((delta: number) => {
+    const next = places[index + delta];
+    if (next) onSelect(next.id);
+  }, [places, index, onSelect]);
+
   const renderItem: ListRenderItem<PlaceRow> = useCallback(({ item }) => <View style={{ width: CARD_W }}>{renderCard(item)}</View>, [renderCard]);
 
   return (
     <GestureDetector gesture={vertical}>
-      <View>
+      <View
+        accessible
+        accessibilityActions={[
+          { name: "next", label: "다음 자리" },
+          { name: "prev", label: "이전 자리" },
+          { name: "close", label: "카드 닫기" },
+        ]}
+        onAccessibilityAction={(e) => {
+          if (e.nativeEvent.actionName === "next") move(1);
+          else if (e.nativeEvent.actionName === "prev") move(-1);
+          else if (e.nativeEvent.actionName === "close") onSwipeDown();
+        }}
+      >
         <FlatList
           ref={list}
           horizontal

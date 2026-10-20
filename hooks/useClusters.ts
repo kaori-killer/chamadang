@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { MapMarker } from "@/components/map/types";
-import type { PlaceRow } from "@/lib/supabase/types";
+import type { PlaceRow } from "@/lib/types";
 import { distanceMeters } from "@/lib/geo/distance";
 
 const radiusForZoom = (zoom: number) => (zoom >= 16 ? 0 : zoom >= 14 ? 40 : 120);

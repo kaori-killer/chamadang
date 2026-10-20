@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { Heading } from "@/components/ui/Heading";
-import type { PlaceRow } from "@/lib/supabase/types";
+import type { PlaceRow } from "@/lib/types";
 
 type Props = { places: PlaceRow[]; posterUrl: (path: string) => string; onSelect: (id: string) => void };
 

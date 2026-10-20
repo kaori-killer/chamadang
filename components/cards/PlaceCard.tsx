@@ -6,7 +6,7 @@ import { Heading } from "@/components/ui/Heading";
 import { ClipThumb } from "./ClipThumb";
 import { TIME_TAGS } from "@/components/plant/TagPicker";
 import { colors, size } from "@/lib/tokens";
-import type { ClipRow, PlaceRow } from "@/lib/supabase/types";
+import type { ClipRow, PlaceRow } from "@/lib/types";
 
 type Props = {
   place: PlaceRow;
