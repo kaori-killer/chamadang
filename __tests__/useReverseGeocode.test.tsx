@@ -5,6 +5,8 @@ import * as geo from "@/lib/geo/reverseGeocode";
 jest.useFakeTimers();
 
 describe("useReverseGeocode", () => {
+  afterEach(() => jest.restoreAllMocks());
+
   it("디바운스 후 주소를 받아온다", async () => {
     jest.spyOn(geo, "reverseGeocode").mockResolvedValue({ short: "은평구 불광동", full: "서울 은평구 불광동 1" });
     const { result } = renderHook(() => useReverseGeocode({ lat: 37.6, lng: 126.9 }, 300));
