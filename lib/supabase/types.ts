@@ -28,6 +28,8 @@ export type ClipRow = {
   recorded_at: string;
 };
 
+export type NearbyPlace = { id: string; name: string | null; lat: number; lng: number; latest_poster: string | null };
+
 type PlaceTable = {
   id: string;
   user_id: string;
@@ -81,7 +83,7 @@ export type Database = {
       };
       nearby_own_place: {
         Args: { lat: number; lng: number; meters?: number };
-        Returns: PlaceTable[];
+        Returns: NearbyPlace[];
       };
     };
     Enums: Record<string, never>;

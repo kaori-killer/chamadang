@@ -84,12 +84,14 @@ language sql stable security invoker as $$
 $$;
 
 create or replace function nearby_own_place(lat double precision, lng double precision, meters double precision default 20)
-returns setof places
+returns table (id uuid, name text, lat double precision, lng double precision, latest_poster text)
 language sql stable security invoker as $$
-  select * from places
-  where user_id = auth.uid()
-    and st_dwithin(location, st_setsrid(st_makepoint(lng, lat), 4326)::geography, meters)
-  order by location <-> st_setsrid(st_makepoint(lng, lat), 4326)::geography
+  select p.id, p.name, st_y(p.location::geometry), st_x(p.location::geometry),
+    (select poster_path from clips where place_id = p.id order by recorded_at desc limit 1)
+  from places p
+  where p.user_id = auth.uid()
+    and st_dwithin(p.location, st_setsrid(st_makepoint(lng, lat), 4326)::geography, meters)
+  order by p.location <-> st_setsrid(st_makepoint(lng, lat), 4326)::geography
   limit 1
 $$;
 

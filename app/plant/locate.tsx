@@ -17,6 +17,7 @@ import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { useNearbyOwnPlace } from "@/hooks/useNearbyOwnPlace";
 import { usePlantFlow } from "@/hooks/usePlantFlow";
 import { useReverseGeocode } from "@/hooks/useReverseGeocode";
+import { usePosterUrl } from "@/hooks/usePosterUrl";
 import { distanceMeters, formatDistance } from "@/lib/geo/distance";
 import type { LatLng } from "@/lib/native/location";
 import { colors, limits, space } from "@/lib/tokens";
@@ -32,6 +33,7 @@ export default function PlantLocate() {
   const geocode = useReverseGeocode(center);
   const nearby = useNearbyOwnPlace(center);
   const { placeName, setPlaceName, setLocation, setAttachTo } = usePlantFlow();
+  const posterUrl = usePosterUrl();
 
   const initial: Region = { center: current.data ?? FALLBACK, zoom: 17 };
   const nearbyPlace = nearby.data;
@@ -75,8 +77,8 @@ export default function PlantLocate() {
             <Heading level="card">지난번 자리 근처예요</Heading>
             <NearbyPlaceCard
               name={nearbyPlace.name}
-              posterUrl={null}
-              distanceLabel={formatDistance(distanceMeters(center, parseLocation(nearbyPlace.location)))}
+              posterUrl={nearbyPlace.latest_poster ? posterUrl(nearbyPlace.latest_poster) : null}
+              distanceLabel={formatDistance(distanceMeters(center, { lat: nearbyPlace.lat, lng: nearbyPlace.lng }))}
               onAttach={() => proceed(nearbyPlace.id)}
               onNew={() => proceed(null)}
             />
@@ -95,9 +97,4 @@ export default function PlantLocate() {
       </View>
     </View>
   );
-}
-
-function parseLocation(wkb: string): LatLng {
-  const m = /POINT\(([-\d.]+) ([-\d.]+)\)/.exec(wkb);
-  return m ? { lng: Number(m[1]), lat: Number(m[2]) } : FALLBACK;
 }
