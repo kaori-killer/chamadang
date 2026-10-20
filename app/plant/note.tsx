@@ -14,6 +14,8 @@ import { TextField } from "@/components/ui/TextField";
 import { usePlantFlow } from "@/hooks/usePlantFlow";
 import { useSavePlant } from "@/hooks/useSavePlant";
 import { useSession } from "@/hooks/useSession";
+import { useUploadQueue } from "@/hooks/useUploadQueue";
+import type { SaveInput } from "@/lib/upload/savePlant";
 import { CupIcon } from "@/components/character/CupIcon";
 import { colors, limits } from "@/lib/tokens";
 
@@ -23,27 +25,35 @@ export default function PlantNote() {
   const session = useSession();
   const flow = usePlantFlow();
   const save = useSavePlant();
+  const queue = useUploadQueue();
 
   if (!flow.clip || !flow.position) { router.replace("/plant/record"); return null; }
 
   const busy = save.isPending;
-  const submit = () => {
-    if (!session.data || !flow.clip || !flow.position) return;
-    save.mutate(
-      {
-        userId: session.data.user.id,
-        clip: flow.clip,
-        attachTo: flow.attachTo,
-        tea: flow.note.tea || null,
-        note: flow.note.note || null,
-        place: {
-          lat: flow.position.lat, lng: flow.position.lng,
-          name: flow.placeName || null, tags: flow.note.tags, visibility: flow.note.visibility,
-          addressShort: flow.address?.short ?? null, addressFull: flow.address?.full ?? null,
-        },
+  const input = (): SaveInput | null => {
+    if (!session.data || !flow.clip || !flow.position) return null;
+    return {
+      userId: session.data.user.id,
+      clip: flow.clip,
+      attachTo: flow.attachTo,
+      tea: flow.note.tea || null,
+      note: flow.note.note || null,
+      place: {
+        lat: flow.position.lat, lng: flow.position.lng,
+        name: flow.placeName || null, tags: flow.note.tags, visibility: flow.note.visibility,
+        addressShort: flow.address?.short ?? null, addressFull: flow.address?.full ?? null,
       },
-      { onSuccess: (placeId) => router.replace({ pathname: "/plant/saved", params: { placeId } }) },
-    );
+    };
+  };
+  const submit = () => {
+    const i = input();
+    if (i) save.mutate(i, { onSuccess: (placeId) => router.replace({ pathname: "/plant/saved", params: { placeId } }) });
+  };
+  const later = async () => {
+    const i = input();
+    if (i) await queue.add(i);
+    flow.reset();
+    router.dismissAll();
   };
 
   return (
@@ -79,7 +89,7 @@ export default function PlantNote() {
 
       <View className="px-page" style={{ paddingBottom: insets.bottom + 16 }}>
         {busy ? <SaveProgress percent={save.percent} /> : save.isError ? (
-          <SaveFailed onRetry={submit} onLater={() => { flow.reset(); router.dismissAll(); }} />
+          <SaveFailed onRetry={submit} onLater={later} />
         ) : (
           <Button label="마당에 심기" icon={<CupIcon size={20} />} onPress={submit} disabled={!session.data} />
         )}
