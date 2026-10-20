@@ -4,14 +4,15 @@
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "ios": "expo run:ios",
     "android": "expo run:android",
     "web": "expo start --web",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "prebuild": "expo prebuild",
-    "test": "jest"
+    "test": "jest",
+    "setup": "rm -rf node_modules ios && npm ci && expo run:ios"
   },
   "dependencies": {
     "@mj-studio/react-native-naver-map": "^2.4.0",
@@ -74,5 +75,8 @@
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/$1"
     }
+  },
+  "engines": {
+    "node": ">=20.19.0"
   }
 }
