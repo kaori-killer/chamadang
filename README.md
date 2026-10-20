@@ -19,7 +19,16 @@ Expo Go는 쓸 수 없어요(네이버맵과 카메라 네이티브 모듈). dev
 
 ## Supabase
 
-`supabase/migrations/0001_init.sql`을 SQL Editor에서 실행하고, Authentication에서 Anonymous sign-ins를 켜주세요.
+1. SQL Editor에서 `supabase/migrations/` 파일을 번호 순서대로 실행
+2. Authentication > Sign In / Providers > Anonymous Sign-Ins 켜기
+3. 계정 연결을 쓰려면 같은 화면에서 Kakao, Apple 제공자 설정
+   - Kakao: developers.kakao.com에서 앱 생성 후 REST API 키와 Client Secret을 Supabase에 입력, 카카오 콘솔의 Redirect URI에 Supabase가 보여주는 Callback URL 등록
+   - Apple: developer.apple.com에서 Services ID를 만들고 Supabase에 입력
+4. Authentication > URL Configuration > Redirect URLs에 `chamadang://auth/callback` 추가
+
+## 네이버 클라우드
+
+Maps에서 Mobile Dynamic Map과 Reverse Geocoding을 켜고, 앱 Bundle ID와 패키지명에 `com.sojeong.chamadang`을 등록해요. Client ID는 `.env`와 `app.json`의 `client_id` 두 곳에 넣어요.
 
 ## 구조
 
