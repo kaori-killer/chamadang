@@ -53,6 +53,8 @@ export type Database = {
         Args: { sw_lat: number; sw_lng: number; ne_lat: number; ne_lng: number; mode?: string };
         Returns: PlaceRow[];
       };
+      delete_my_account: { Args: Record<string, never>; Returns: undefined };
+      my_place_count: { Args: Record<string, never>; Returns: number };
       nearby_own_place: {
         Args: { lat: number; lng: number; meters?: number };
         Returns: NearbyPlace[];
