@@ -7,6 +7,7 @@ import { MapView } from "@/components/map/MapView";
 import type { MapBounds, MapHandle, Region } from "@/components/map/types";
 import { ModeToggle } from "@/components/map/ModeToggle";
 import { PlantFab } from "@/components/map/PlantFab";
+import { PlaceCardLayer } from "@/components/cards/PlaceCardLayer";
 import { IconButton } from "@/components/ui/IconButton";
 import { TopBar } from "@/components/ui/TopBar";
 import { Heading } from "@/components/ui/Heading";
@@ -23,7 +24,7 @@ export default function MapHome() {
   const mapRef = useRef<MapHandle>(null);
   const [region, setRegion] = useState<Region>(SEOUL);
   const [bounds, setBounds] = useState<MapBounds | null>(null);
-  const { mode, setMode, selectedPlaceId, openCard, collapseCard } = useUi();
+  const { mode, setMode, selectedPlaceId, card, openCard, openCluster, collapseCard } = useUi();
   const places = usePlaces(bounds, mode);
   const markers = useClusters(places.data ?? [], region.zoom, selectedPlaceId);
   const bottomInset = insets.bottom + space.bottomSafe;
@@ -35,7 +36,7 @@ export default function MapHome() {
         initialRegion={SEOUL}
         markers={markers}
         bottomInset={bottomInset}
-        onMarkerPress={(id) => (id.startsWith("cluster:") ? undefined : openCard(id))}
+        onMarkerPress={(id) => (id.startsWith("cluster:") ? openCluster(id.slice("cluster:".length).split(",")) : openCard(id))}
         onMapPress={collapseCard}
         onRegionChangeIdle={(r, b) => { setRegion(r); setBounds(b); }}
       />
@@ -61,9 +62,13 @@ export default function MapHome() {
         </IconButton>
       </View>
 
-      <View className="absolute left-0 right-0 items-center" style={{ bottom: insets.bottom + 16 }}>
-        <PlantFab caption="여기, 차 마시기 좋아요" onPress={() => router.push("/plant/record")} />
-      </View>
+      {card === "none" ? (
+        <View className="absolute left-0 right-0 items-center" style={{ bottom: insets.bottom + 16 }}>
+          <PlantFab caption="여기, 차 마시기 좋아요" onPress={() => router.push("/plant/record")} />
+        </View>
+      ) : null}
+
+      <PlaceCardLayer places={places.data ?? []} onFocusPlace={(p) => mapRef.current?.animateTo({ lat: p.lat, lng: p.lng })} />
     </View>
   );
 }
