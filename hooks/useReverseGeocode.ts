@@ -8,13 +8,16 @@ export function useReverseGeocode(position: LatLng | null, delayMs = 300): Geoco
   const [state, setState] = useState<GeocodeState>({ status: "idle", address: null });
   const seq = useRef(0);
 
+  const lat = position?.lat;
+  const lng = position?.lng;
+
   useEffect(() => {
-    if (!position) return;
+    if (lat === undefined || lng === undefined) return;
     const id = ++seq.current;
     setState((s) => ({ ...s, status: "loading" }));
     const timer = setTimeout(async () => {
       try {
-        const address = await reverseGeocode(position);
+        const address = await reverseGeocode({ lat, lng });
         if (id !== seq.current) return;
         setState({ status: address ? "done" : "failed", address });
       } catch {
@@ -22,7 +25,7 @@ export function useReverseGeocode(position: LatLng | null, delayMs = 300): Geoco
       }
     }, delayMs);
     return () => clearTimeout(timer);
-  }, [position?.lat, position?.lng, delayMs]);
+  }, [lat, lng, delayMs]);
 
   return state;
 }
