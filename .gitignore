@@ -11,3 +11,4 @@ android/
 *.mobileprovision
 .env
 .env.*
+!.env.example
