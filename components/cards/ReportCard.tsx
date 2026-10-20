@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native";
 import { Button } from "@/components/ui/Button";
 import { Heading } from "@/components/ui/Heading";
 import { SheetCard } from "./SheetCard";
-import type { ReportReason } from "@/lib/supabase/reports";
+import type { ReportReason } from "@/lib/types";
 
 const REASONS: { key: ReportReason; label: string }[] = [
   { key: "not_tea_spot", label: "차 마시는 자리가 아니에요" },

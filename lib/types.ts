@@ -29,3 +29,5 @@ export type ClipRow = {
 };
 
 export type NearbyPlace = { id: string; name: string | null; lat: number; lng: number; latest_poster: string | null };
+
+export type ReportReason = "not_tea_spot" | "privacy" | "harmful" | "other";

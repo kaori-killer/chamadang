@@ -8,6 +8,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useSession } from "@/hooks/useSession";
+import { useOnboarded } from "@/hooks/useOnboarded";
+import { useUploadQueue } from "@/hooks/useUploadQueue";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,7 +21,9 @@ function Root() {
     Gaegu: require("../assets/fonts/Gaegu-Bold.ttf"),
   });
   const session = useSession();
-  const ready = fontsLoaded && !session.isPending;
+  const onboarded = useOnboarded();
+  useUploadQueue();
+  const ready = fontsLoaded && !session.isPending && !onboarded.isPending;
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync();
@@ -28,7 +32,7 @@ function Root() {
   if (!ready) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#F4EFE4" } }}>
+    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#F4EFE4" } }} initialRouteName={onboarded.data ? "index" : "onboarding"}>
       <Stack.Screen name="index" />
       <Stack.Screen name="onboarding" />
       <Stack.Screen name="plant" options={{ presentation: "fullScreenModal", animation: "slide_from_bottom" }} />

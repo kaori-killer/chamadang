@@ -1,11 +1,12 @@
 import { Pressable, Text, View } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Camera, MapPin } from "lucide-react-native";
 import { Button } from "@/components/ui/Button";
 import { Heading } from "@/components/ui/Heading";
 import { StepDots } from "@/components/ui/StepDots";
 import { usePermissions } from "@/hooks/usePermissions";
+import { useOnboarded } from "@/hooks/useOnboarded";
 import { colors } from "@/lib/tokens";
 
 function PermissionCard({ icon, title, sub }: { icon: React.ReactNode; title: string; sub: string }) {
@@ -24,8 +25,14 @@ export default function Permissions() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { requestAll } = usePermissions();
+  const onboarded = useOnboarded();
+  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
 
-  const finish = () => router.replace("/");
+  const finish = async () => {
+    await onboarded.markDone();
+    if (returnTo === "plant") router.replace("/plant/record");
+    else router.replace("/");
+  };
 
   return (
     <View className="flex-1 bg-bg px-page" style={{ paddingTop: insets.top + 40, paddingBottom: insets.bottom + 16 }}>
