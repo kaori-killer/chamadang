@@ -22,7 +22,7 @@ describe("useReverseGeocode", () => {
   });
   it("위치가 바뀌면 이전 응답은 버린다", async () => {
     const spy = jest.spyOn(geo, "reverseGeocode").mockImplementation(async ({ lat }) => ({ short: `위치 ${lat}`, full: "" }));
-    const { result, rerender } = renderHook(({ p }) => useReverseGeocode(p, 100), { initialProps: { p: { lat: 1, lng: 1 } } });
+    const { result, rerender } = renderHook(({ p }: { p: { lat: number; lng: number } }) => useReverseGeocode(p, 100), { initialProps: { p: { lat: 1, lng: 1 } } });
     rerender({ p: { lat: 2, lng: 2 } });
     await act(async () => { jest.advanceTimersByTime(100); });
     expect(spy).toHaveBeenCalledTimes(1);
