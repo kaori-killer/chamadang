@@ -2,7 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { enqueue, flushQueue, readQueue } from "@/lib/upload/queue";
 import * as save from "@/lib/upload/savePlant";
 
-jest.mock("@react-native-async-storage/async-storage", () => require("@react-native-async-storage/async-storage/jest/async-storage-mock"));
 
 const input = (id: string): save.SaveInput => ({
   userId: "u", attachTo: null, tea: null, note: null,

@@ -35,6 +35,7 @@ module.exports = [
       ],
     },
   },
+  { files: ["jest.setup.ts"], rules: { "@typescript-eslint/no-require-imports": "off" } },
   {
     files: ["components/map/**/*.{ts,tsx}", "components/camera/**/*.{ts,tsx}"],
     rules: { "no-restricted-imports": "off" },
