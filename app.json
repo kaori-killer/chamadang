@@ -23,7 +23,11 @@
         "RECORD_AUDIO",
         "ACCESS_FINE_LOCATION"
       ],
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#F4EFE4"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -54,10 +58,20 @@
       ],
       "expo-apple-authentication",
       "expo-video",
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 160,
+          "backgroundColor": "#F4EFE4"
+        }
+      ],
       "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "icon": "./assets/images/icon.png"
   }
 }
