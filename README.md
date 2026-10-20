@@ -15,9 +15,7 @@ Expo Go는 쓸 수 없어요(네이버맵과 카메라 네이티브 모듈). dev
 
 ## 폰트
 
-`assets/fonts/`에 두 파일을 넣어주세요.
-- `PretendardVariable.ttf` — https://github.com/orioncactus/pretendard
-- `Gaegu-Bold.ttf` — https://fonts.google.com/specimen/Gaegu
+`assets/fonts/`에 Pretendard(OFL)와 Gaegu(OFL)가 들어 있어요.
 
 ## Supabase
 
